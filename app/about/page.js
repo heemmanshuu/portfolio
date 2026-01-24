@@ -2,26 +2,26 @@ import Base from '../../layouts/Base';
 import AboutClient from './AboutClient';
 
 export const metadata = {
-  title: 'About',
+  title: 'About Me',
   description:
-    "Zeno Rocha is a Brazilian creator and programmer. He currently lives in San Francisco, California, where he's the Founder & CEO at Resend. His lifelong appreciation for building software and sharing knowledge led him to speak in over 110 conferences worldwide. His passion for open source put him on the top 20 most active users on GitHub at age 22. Before moving to the US, Zeno developed multiple applications, mentored startups, and worked at major companies in Latin America, such as Globo and Petrobras.",
+    "Heemmanshuu Dasari is a backend software engineer and computer science researcher with a focus on distributed systems and reliability. He is currently pursuing an MS in Computer Science at the University of California, Irvine. Previously, he worked at Oracle building secure, multi-tenant notification services, and at Nutanix on fault-tolerant cloud provisioning workflows across public and on-prem infrastructure. With a strong foundation from IIT Bombay, Heemmanshuu has worked across large-scale systems, data-intensive platforms, and emerging AI/LLM infrastructure, including distributed matchmaking and inference systems. His work is driven by an interest in building robust systems that scale in the real world, combining practical engineering with research-oriented thinking.",
   openGraph: {
-    title: 'About // Zeno Rocha',
+    title: 'About // G Heemmanshuu Dasari',
     description:
-      "Zeno Rocha is a Brazilian creator and programmer. He currently lives in San Francisco, California, where he's the Founder & CEO at Resend.",
-    url: 'https://zenorocha.com/about',
+      "Heemmanshuu is an Indian backend engineer. He lives in Irvine, CA, where he pursuing an MS in Computer Science.",
+    url: 'https://ghdasari.vercel.app/about',
     images: ['/static/images/about-bw.jpg']
   }
 };
 
 export default function About() {
   const description =
-    "Zeno Rocha is a Brazilian creator and programmer. He currently lives in San Francisco, California, where he's the Founder & CEO at Resend. His lifelong appreciation for building software and sharing knowledge led him to speak in over 110 conferences worldwide. His passion for open source put him on the top 20 most active users on GitHub at age 22. Before moving to the US, Zeno developed multiple applications, mentored startups, and worked at major companies in Latin America, such as Globo and Petrobras.";
+    "Heemmanshuu Dasari is a backend software engineer and computer science researcher with a focus on distributed systems and reliability. He is currently pursuing an MS in Computer Science at the University of California, Irvine. Previously, he worked at Oracle building secure, multi-tenant notification services, and at Nutanix on fault-tolerant cloud provisioning workflows across public and on-prem infrastructure. With a strong foundation from IIT Bombay, Heemmanshuu has worked across large-scale systems, data-intensive platforms, and emerging AI/LLM infrastructure, including distributed matchmaking and inference systems. His work is driven by an interest in building robust systems that scale in the real world, combining practical engineering with research-oriented thinking.";
 
   return (
     <Base
-      title="About // Zeno Rocha"
-      tagline="Create. Share. Repeat."
+      title="About // G Heemmanshuu Dasari"
+      tagline="About Me"
       primaryColor="pink"
       secondaryColor="purple"
     >

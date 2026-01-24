@@ -24,7 +24,7 @@ export default function AboutClient({ description }) {
       <div className="flex flex-col justify-between md:flex-row">
         <div className="mt-0 w-auto md:w-84">
           <Image
-            alt="Zeno"
+            alt="Heemmanshuu"
             src="/static/images/avatar.jpg"
             width="336"
             height="336"
@@ -35,21 +35,21 @@ export default function AboutClient({ description }) {
         </div>
         <div className="mt-0 w-auto md:w-[48%]">
           <p className="mt-4 md:my-3.75 md:-mt-1.5">
-            <strong>Hey, I&apos;m Zeno Rocha</strong>
-            <Pronunciation />I started as a software engineer back in 2009,
-            working with Flash.
+            <strong>Hey, I&apos;m Heemmanshuu Dasari</strong>
+            <Pronunciation />I&apos;m a backend software engineer with a strong focus on
+            distributed systems and reliability.
           </p>
+
           <p className="md:my-3.75">
-            I&apos;m the <strong>Founder & CEO</strong> at Resend. Before that,
-            I was a VP of Developer Experience at WorkOS and CPO at Liferay
-            Cloud. I&apos;m originally from Brazil and now living in{' '}
-            <strong>San Francisco, California</strong> with my amazing wife and
-            beautiful daughter.
+            I&apos;m currently pursuing an <strong>MS in Computer Science</strong> at <strong>UC Irvine</strong>. 
+            Previously, I worked at <strong>Oracle</strong>, building secure,
+            multi-tenant notification services, and at <strong>Nutanix</strong> on
+            fault-tolerant cloud provisioning workflows. I did my undergrad at <strong>IIT Bombay</strong>.
           </p>
+
           <p className="md:my-3.75">
-            <strong>I love dark mode</strong>, open source, and side projects.
-            When I&apos;m not working, I like running, watching movies, and{' '}
-            <strong>eating cheese</strong>.
+            I enjoy working on <strong>distributed systems</strong>, backend
+            infrastructure, and AI/LLM systems at scale. 
           </p>
         </div>
       </div>
@@ -60,8 +60,7 @@ export default function AboutClient({ description }) {
     return (
       <div>
         <p>
-          This is made for journalists, podcast hosts, and event organizers to
-          copy-and-paste.
+          This is made for recruiters, colleagues, and referrers to copy-and-paste.
         </p>
         <blockquote>
           <p>{description}</p>
