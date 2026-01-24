@@ -10,12 +10,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const pages = [
     'About',
-    'Articles',
+    'Experience',
     'Projects',
-    'Talks',
-    'Podcasts',
-    'Investing',
-    'Uses',
+    'Articles',
+    // 'Talks',
+    // 'Podcasts',
+    // 'Investing',
+    // 'Uses',
     'Reminder'
   ];
   const { toggle } = useCommandBar();

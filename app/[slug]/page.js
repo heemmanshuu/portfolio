@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
       notFound();
     }
 
-    const title = `${post.title} // Zeno Rocha`;
+    const title = `${post.title} // Heemmanshuu Dasari`;
     const description = post.description || '';
     const url = `https://zenorocha.com/${slug}`;
     const image = post.image
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }) {
         type: 'article',
         publishedTime: new Date(post.date).toISOString(),
         modifiedTime: new Date(post.date).toISOString(),
-        authors: ['Zeno Rocha']
+        authors: ['G Heemmanshuu Dasari']
       },
       alternates: post.canonical_url
         ? {
@@ -88,7 +88,7 @@ export default async function Post({ params }) {
     notFound();
   }
 
-  const title = `${post.title} // Zeno Rocha`;
+  const title = `${post.title} // Heemmanshuu Dasari`;
   const url = `https://zenorocha.com/${post.slug}`;
   const date = new Date(post.date).toISOString();
   const image = post.image
@@ -98,7 +98,7 @@ export default async function Post({ params }) {
   return (
     <>
       <ArticleJsonLd
-        authorName="Zeno Rocha"
+        authorName="G Heemmanshuu Dasari"
         type="Blog"
         url={url}
         title={title}

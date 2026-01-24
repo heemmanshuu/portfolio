@@ -57,14 +57,14 @@ const firaCode = localFont({
 export const metadata = {
   metadataBase: new URL('https://zenorocha.com'),
   title: {
-    default: 'Zeno Rocha',
-    template: '%s // Zeno Rocha'
+    default: 'G Heemmanshuu Dasari',
+    template: '%s // G Heemmanshuu Dasari'
   },
   description: 'Obsessed with developer experience',
-  authors: [{ name: 'Zeno Rocha' }],
+  authors: [{ name: 'G Heemmanshuu Dasari' }],
   openGraph: {
     type: 'website',
-    siteName: 'Zeno Rocha'
+    siteName: 'G Heemmanshuu Dasari'
   },
   twitter: {
     card: 'summary_large_image'
