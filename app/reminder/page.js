@@ -7,7 +7,7 @@ export const metadata = {
     'Time is the most important asset. Time does not equal money. Time equals life. And you only have one chance to make it right.',
   openGraph: {
     title: 'Reminder // G Heemmanshuu Dasari',
-    url: 'https://zenorocha.com/reminder',
+    url: 'https://ghdasari.vercel.app/reminder',
     images: ['/static/images/reminder-bw.jpg']
   }
 };

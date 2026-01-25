@@ -1,10 +1,10 @@
 ---
-title: Experimental Heem title
-description: 'Designing a dark mode version of your app comes with its own challenges. In this post, we will share some of the lessons we learned during the implementation of dark mode at WorkOS.'
-slug: computer_networks_notes
+title: Notes on Communication Networks
+description: 'These are short notes I prepared reading the Kurose-Ross textbook for the CS232 course at UC irvine.'
+slug: computer-networks-notes
 canonical_url: https://workos.com/blog/5-lessons-we-learned-adding-dark-mode-to-our-platform
 image: /static/img/posts/marathons-and-startups.jpg
-date: '2021-08-12'
+date: '2024-12-10'
 ---
 
 # Kurose Ross Notes
@@ -274,7 +274,7 @@ SImilarly response has a status line (version+status code+status msg), few (6) h
 
 **Hierarchical architecture of DNS** - root level DNS, top-level domain (TLD) DNS, authoritative DNS
 
-![Screenshot 2024-12-09 at 8.17.14 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_8.17.14_AM.png)
+![Screenshot 2024-12-09 at 8.17.14 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_8.17.14_AM.png)
 
 - Internet has 13 **root DNS servers**. Each of them is a network of DNS servers, for **security** and **reliability** purposes - 247 in total.
 - **TLD (Top Level Domain) servers** are responsible for domains such as .*com, .org, .fr*
@@ -285,7 +285,7 @@ SImilarly response has a status line (version+status code+status msg), few (6) h
 - TLD server unlike this example does not directly know all the authoritative servers. It may know of an **intermediate DNS server**, which then knows the authoritative one.
 - The query from the requesting host to the local DNS server is **recursive** (host asked DNS to provide mapping on its behalf), and the remaining queries are **iterative** (each reply was sent to local DNS itself). Recursive queries travel *all the way to the authoritative server and then all the way back.* (The arrows in the figure would be 1(local)→2(root)→3(TLD)→4(authDNS)→5(TLD)→6(root)→7(local)→8(querying host)
 
-![Screenshot 2024-12-09 at 8.27.25 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_8.27.25_AM.png)
+![Screenshot 2024-12-09 at 8.27.25 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_8.27.25_AM.png)
 
 ## Chapter 3: Transport Layer
 
@@ -326,9 +326,9 @@ server side of the application assigns a specific port number.
 - UDP header has 4 fields of 2 bytes (16bits) each: source port, dest port, length and checksum. Checksum is 1s complement of the sum of all 16-bit words in the appl data (message) part of the segment. At the receiver, all 4 words are added and then added to checksum and we expect 16 1s. From **end-end principle** (which states that since certain functionality (error detection, in this case) must be implemented on an end-end basis: functions placed at the lower levels may be redundant or of little value when compared to the cost of providing them at the higher level.), if we want error detection at the highest level, UDP must provide error detection at the transport layer. This is because neither link-by-link reliability (one of the links may have a link layer protocol without error checking) nor in-memory error detection (bit error introduced when a segment is stored in router’s memory) is guaranteed. Some UDP implementations discard the damaged segment, some pass it with a warning. UDP only does error detection, not recovery.
 - The fundamental notion behind the end-to-end principle is that for two [processes](https://en.wikipedia.org/wiki/Process_(computing)) communicating with each other via some communication means, the [*reliability*](https://en.wikipedia.org/wiki/Reliability_(computer_networking)) obtained from that means cannot be expected to be perfectly aligned with the reliability requirements of the processes. Intermediary nodes, such as [gateways](https://en.wikipedia.org/wiki/Gateway_(telecommunications)) and [routers](https://en.wikipedia.org/wiki/Router_(computing)), that exist to establish the network, may implement these to improve efficiency but cannot guarantee end-to-end correctness.
 
-![image.png](../public/static/images/computer_networks_notes_pics/image.png)
+![image.png](/static/images/computer_networks_notes_pics/image.png)
 
-![image.png](../public/static/images/computer_networks_notes_pics/image%201.png)
+![image.png](/static/images/computer_networks_notes_pics/image%201.png)
 
 ### Reliable data transfer
 
@@ -341,23 +341,23 @@ server side of the application assigns a specific port number.
 - **stop-and-wait** protocols are those which need ACK/NAK from receiver before they can accept further data from upper layer.
 - Receiver can send **duplicate ACKs** (ie., another ACK for a previously received packet) instead of a NAK. Because packet sequence numbers alternate between 0 and 1, protocol rdt3.0 is sometimes known as the **alternating-bit protocol**.
 
-![Screenshot 2024-11-29 at 10.52.37 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_10.52.37_AM.png)
+![Screenshot 2024-11-29 at 10.52.37 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_10.52.37_AM.png)
 
-![Screenshot 2024-11-29 at 10.59.30 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_10.59.30_AM.png)
+![Screenshot 2024-11-29 at 10.59.30 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_10.59.30_AM.png)
 
 - Packet loss can be due to the packet or the receiver’s ACK of that packet being lost or overly delayed. The sender needs to wait atleast for a full RTT (including buffer and receiver processing time) before it decides to retransmit a packet. Retransmission introduces the possibility of **duplicate data packets** in the channel.
 - However, stop and wait protocol has a very bad **utilisation**, the fraction of time for which sender was actually transmitting = (transmission rate(L/R))/(RTT + trans. rate). (RTT is time from last bit of packet sending to the time ACK is received) Thus, sender has to send a series of packets without waiting for ACKS, called **pipelining**. For pipelining, range of sequence numbers at source and receiver must increase, sender and receiver sides of the protocols may have to buffer more than one packet (transmitted but not ACK ones). Two approaches toward pipelined error recovery: **Go-Back-N** and **selective repeat**.
 - In **Go-Back-N**: sender can have a maximum of N un ACK packets in the pipeline. *base* is seq num of oldest un ACK packet and *nextseqnum* is the smallest unused seq number. [nextseqnum, base+N-1] are packets that can be sent immediately upon arrival! N is window size and GBN is a **sliding window protocol**. Instead of having unlimited N, putting a cap helps us in **flow control**. TCP has a 32-bit sequence number field, where TCP sequence numbers count bytes in the byte stream rather than packets. The below are called xtended FSMs because extra variables and operations on them have been added.
 
-![Screenshot 2024-11-29 at 11.45.58 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_11.45.58_AM.png)
+![Screenshot 2024-11-29 at 11.45.58 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_11.45.58_AM.png)
 
-![Screenshot 2024-11-29 at 11.46.25 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_11.46.25_AM.png)
+![Screenshot 2024-11-29 at 11.46.25 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_11.46.25_AM.png)
 
 - An ACK for a packet with number n is a **cumulative ACK** for all packets ≤ n. If a timeout occurs, the sender resends all packets that have been previously sent but are still not ACK. Figure uses single timer, which can be thought of as a timer for the oldest transmitted but not yet ACK packet. If an ACK is received but there are still additional transmitted but not yet ACK packets, the timer is restarted. If not un ACK, stopped.
 - If packet n+1 arrives before n and n is lost, receiver need not buffer it because n+1 will be retransmitted by the sender anyway.
 - GBN protocol incorporates the use of sequence numbers, cumulative acknowledgments, checksums, and a timeout/retransmit operation.
 
-![Screenshot 2024-11-29 at 5.47.22 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_5.47.22_PM.png)
+![Screenshot 2024-11-29 at 5.47.22 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-29_at_5.47.22_PM.png)
 
 - **Selective Repeat (SR)** protocols avoid unnecessary retransmissions by having the sender retransmit only those packets that it suspects were received in error (that is, were lost or corrupted) at the receiver ⇒ it receives an ACK for each packet it transmitted. Out-of-order packets are buffered until any missing packet is received. **Note** that the sender and receiver sliding windows move forward when the ACK/packet is received for the *base* packet number of the window. The receiver reacknowledges (rather than ignores) already received packets with certain sequence numbers below the current window base. The sender and receiver will not always have an identical view of what has been received correctly and what has not.
 - Lack of synchronisation between sender and receiver can actually lead to issues. Due to unforseen cases, the sender might retransmit a packet or send a new one. If the sequence numbers are same, the receiver cannot tell the difference between a retransmission and a new packet! The window size must be ≤ **half** the size of the sequence number space for SR protocols.
@@ -392,13 +392,13 @@ $$
 - Unlike convenient timer per segment, recommended TCP timer management procedures use only a *single* retransmission timer, even if there are multiple transmitted but not yet ACK segments. This is because timers add overhead. Timer is associated with oldest unACK segment. If timer is not already running, TCP starts the timer when segment is sent to IP.
 - **Scenarios:** 1. If two segments were sent back to back and timed out. Sender will retransmit the **first** segment and restart timer. If the ACK for second segment arrives before *new timeout* it will not be retransmitted! 2. If ACK for first packet is lost but second is received before *first timeout itself*, **cumulative acknowledgement** ensures that sender knows **both** packets were received. So *no retransmission* for either!
 
-![Screenshot 2024-12-02 at 4.13.47 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-02_at_4.13.47_PM.png)
+![Screenshot 2024-12-02 at 4.13.47 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-02_at_4.13.47_PM.png)
 
 - TCP cannot send negative ACK. So it just sends duplicate ACKs for last in-order byte of data. If sender receives 3 duplicate ACKs for same data, this means the segment following this data has been lost. TCP sender performs a **fast retransmit**, retransmit the segment before its timer runs out.
 - TCP sender need only maintain the smallest sequence number of a transmitted but unacknowledged byte (SendBase) and the sequence number of the next byte to be sent (NextSeqNum). So TCP is kind of like GBN. But as seen in error cases above, TCP will not retransmit all segments following a missed segment, it won’t even retransmit the missed segment if cumulative ACK is received. Also, TCP will buffer correctly received but out-of-order segments.
 - **ANALYSE after studying**
 
-![Screenshot 2024-12-02 at 4.21.21 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-02_at_4.21.21_PM.png)
+![Screenshot 2024-12-02 at 4.21.21 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-02_at_4.21.21_PM.png)
 
 - TCP provides a **flow-control service** to prevent receiver’s buffer from getting overflowed. Data is buffered when it is in sequence and will be there till appl. layer picks it up. Sender maintains a variable called **receive window**. This is equal to the amount of spare room in the buffer **rwnd = RcvBuffer – [LastByteRcvd – LastByteRead]**. Meanwhile Host A makes sure that while sending: **LastByteSent – LastByteAcked ≤ rwnd** (similar inrq. at receiver side). If receiver has nothing to send and its buffer is full and becomes non empty afterwards, sender will never know! Thus sender keeps sending 1 byte segments even when rwnd=0 and keeps receiving ACKs.
 
@@ -418,7 +418,7 @@ $$
 - Four ACKs for a segment implies loss of segment following this quadriply ACKed segment. If **segment is lost**, dec rate. If all is good (receiving **new ACKs**): increase rate. Do **bandwidth probing**: keep increasing rate until congestion then back off. **TCP congestion-control algorithm:** 1. slow start (increases size of cwnd more rapidly) 2. congestion avoidance 3. fast recovery
 - 
 
-![Screenshot 2024-12-03 at 5.43.52 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-03_at_5.43.52_AM.png)
+![Screenshot 2024-12-03 at 5.43.52 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-03_at_5.43.52_AM.png)
 
 - **Slow start** increases cwnd for *each new ACK* ie., exponential kind of increase. ssthresh is a state variable for slow start threshold. If cwnd ≥ ssthresh it moves to congestion avoidance mode. At timeout ssthresh is set to pre. value of cwnd/2 for safety. If 3 duplicate ACKs, TCP does fast retransmit and moves to fast recovery state.
 - In congestion avoidance, increase cwnd more slowly (once **per RTT**). Behaviour at timeout is the same as slow start. But with 3 ACKs the behaviour should be less sever as tranmission is still on.
@@ -449,7 +449,7 @@ connection through the router is torn down. This could easily happen at a micros
 
 **Input processing**
 
-![Screenshot 2024-12-03 at 7.02.03 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-03_at_7.02.03_AM.png)
+![Screenshot 2024-12-03 at 7.02.03 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-03_at_7.02.03_AM.png)
 
 - Line termination: physical layer function of terminating an incoming physical link at a router.
 - performs link-layer functions needed to interoperate with the link layer at the other side of the incoming link
@@ -495,14 +495,14 @@ with an **unlikely UDP port number**. The first of these datagrams has a TTL of 
 - Each node broadcasts **link-state packets** to all other nodes, with each link-state packet containing the identities and costs of its attached links. There are **link-state broadcast algorithms** for this. Dijkstra’s and Prim’s are some link-state routing algorithms.
 - after the *k*th iteration of the algorithm, the least-cost paths are known to *k* destination nodes, and among the least-cost paths to all destination nodes, these *k* paths will have the *k* smallest costs. The number of times the loop is executed is equal to the number of nodes in the network.
 
-![Screenshot 2024-12-04 at 11.57.49 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_11.57.49_AM.png)
+![Screenshot 2024-12-04 at 11.57.49 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_11.57.49_AM.png)
 
 - After the path is reconstructed backwards, the forwarding table stores the next hop from source for each destination.
 - Time complexity is O(n^2). Using heap in line 9 to find min can reduce linear to logarithmic time.
 
-![Screenshot 2024-12-04 at 12.01.53 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.01.53_PM.png)
+![Screenshot 2024-12-04 at 12.01.53 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.01.53_PM.png)
 
-![Screenshot 2024-12-04 at 12.01.18 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.01.18_PM.png)
+![Screenshot 2024-12-04 at 12.01.18 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.01.18_PM.png)
 
 - This and any routing algorithm can face the problem of oscillation when used in edge costs with congestion/delay based metrics, where each time they run LS algo they’ll decide a clockwise/anti direction is best. Either mandate that link costs not depend on the amount of traffic carried or ensure that not all routers run the LS algorithm at the same time. However:
 - Researchers have found that routers in the Internet can self-synchronize among themselves. That is, even though they initially execute the algorithm with the same period but at different instants of time, the algorithm execution instance can eventually become, and remain, synchronized at the routers. One way to avoid such self synchronization is for each router to randomize the time it sends out a link advertisement.
@@ -512,7 +512,7 @@ with an **unlikely UDP port number**. The first of these datagrams has a TTL of 
 - Iterative (process continues till no more info is exchanged. Then it just stops), async (no need for nodes to operate in lockstep with each other), distributed (each node receives info from neighbours, calculates and distributes results back to them).
 - Uses Bellman-Ford equation: $d_{x}(y) = \min_{v}(c(x,v) + d_{v}(y))$
 
-![Screenshot 2024-12-04 at 12.16.15 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.16.15_PM.png)
+![Screenshot 2024-12-04 at 12.16.15 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.16.15_PM.png)
 
 Each node maintains some routing information:
 
@@ -521,7 +521,7 @@ Each node maintains some routing information:
 - The distance vectors of each of its neighbors
 - Uses Bellman Ford to update its DV after receiving neighbor DV
 
-![Screenshot 2024-12-04 at 12.17.37 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.17.37_PM.png)
+![Screenshot 2024-12-04 at 12.17.37 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_12.17.37_PM.png)
 
 - In some cases when DVs change, recovery can happen quickly but in some cases **routing loops** can occur. Packets will keep bouncing back and forth (take triangle case where distance between two nodes inc significantly.) Lot of iterations can be needed for it to get fixed - (too huge a change, **count-to-infinity problem**). The particular triangle problem on pg. 378 can be solved using a **Poisoned reverse,** if z routes through y to reach x, z will tell y that its distance to x is infinity. Loops involving three or more nodes will not be detected by Poisoned reverse technique, thus it does not solve the count-to-infinity problem in general.
 - LS and DV can differ in *message complexity, speed of convergence* and *robustness*. They take complementary approaches to routing. In DV, each node talks to its neighbours and provides estimates of distances to all nodes. In LS, each node talks to everyone but provides costs only of its neighbours.
@@ -538,7 +538,7 @@ Each node maintains some routing information:
 - Router puts entry(subnet, router interface that is on least cost path to gateway router to neighbouring AS that can reach x) into fwd. table.
 - In **hot-potato routing**, the AS gets rid of the packet as quickly (inexpensively) as possible by having a router send the packet to the gateway router that has the smallest router-to-gateway cost among all gateways with a path to the destination.
 
-![Screenshot 2024-12-04 at 1.42.18 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_1.42.18_PM.png)
+![Screenshot 2024-12-04 at 1.42.18 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-04_at_1.42.18_PM.png)
 
 - AS can decide with destinations it wants to advertise to neighbors. All routers in ISP can be in a single AS, or ISPs can partition network into several ASs.
 
@@ -551,7 +551,7 @@ Each node maintains some routing information:
 - Each router maintains an RIP table called **routing table** (includes router’s DV and forwarding table). 3 columns: dest. subnet, next router to dest. along shortest path, distance to subnet along this path. In principle, one row for each table but subnets can be aggregated using route aggregation techniques.
 - Routing table can be modified if needed upon receiving advertisements. Adverts are exchanged every 30s. If advert not received for 180s from a router, it is considered dead. Routing table is modified accordingly and advertised.
 
-![Screenshot 2024-12-05 at 11.01.38 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_11.01.38_AM.png)
+![Screenshot 2024-12-05 at 11.01.38 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_11.01.38_AM.png)
 
 - A router can also request information about its neighbor’s cost to a given destination using RIP’s request message.
 - Routers send RIP request and response messages to each other over UDP using port number 520. RIP is implemented as an appl layer protocol over UDP. The UDP segment is carried between routers in a standard IP datagram.
@@ -597,7 +597,7 @@ In **reverse path forwarding (RPF)/reverse path broadcast (RPB)**, when a router
 
 Creation and maintenance of this spanning tree is the main cause for complexity here. In the **center-based approach** to building a spanning tree, a center node (also known as a **rendezvous point** or a **core**) is defined. Nodes then unicast tree-join messages addressed to the center node. A tree-join message is forwarded using **unicast routing** (ie., use shortest route!) toward the center until it **1.** either arrives at a node that already belongs to the spanning tree or **2.** arrives at the center. Use example.
 
-![Screenshot 2024-12-05 at 1.34.24 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_1.34.24_PM.png)
+![Screenshot 2024-12-05 at 1.34.24 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_1.34.24_PM.png)
 
 ### Multicast routing
 
@@ -610,7 +610,7 @@ Creation and maintenance of this spanning tree is the main cause for complexity 
 - *Multicast routing using a source-based tree:* an RPF algorithm (with source node *x*) is used (after some tweaking) to construct a multicast forwarding tree for multicast datagrams originating at source *x.* Original RPF needs tweaking because router may forward to another router that has no hosts joined to multicast group! Solution to the problem of receiving unwanted multicast packets under RPF is known as **pruning**. A multicast router that receives multicast packets and has no attached hosts joined to that group will send a prune message to its upstream router. If a router receives prune messages from each of its downstream routers, then it can forward a prune message upstream.
 - The first multicast routing protocol used in the Internet was the **Distance-Vector Multicast Routing Protocol (DVMRP).** More widely used is **Protocol-Independent Multicast (PIM) routing protocol**.
 
-![Screenshot 2024-12-05 at 1.57.42 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_1.57.42_PM.png)
+![Screenshot 2024-12-05 at 1.57.42 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_1.57.42_PM.png)
 
 ## Chapter 5: Link Layer
 
@@ -630,7 +630,7 @@ Creation and maintenance of this spanning tree is the main cause for complexity 
 - part of the link layer is implemented in software that runs on the host’s CPU. The software components of the link layer implement higher-level link-layer functionality such as assembling link-layer addressing information and activating the controller hardware
 - On the receiving side, link-layer software responds to controller interrupts (e.g., due to the receipt of one or more frames), handling error conditions and passing a datagram up to the network layer.
 
-![Screenshot 2024-12-05 at 7.31.37 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_7.31.37_PM.png)
+![Screenshot 2024-12-05 at 7.31.37 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-05_at_7.31.37_PM.png)
 
 - Link layer is a place where software meets hardware!
 
@@ -664,7 +664,7 @@ $$
 
 - Each of the CRC standards can detect burst errors of fewer than *r* + 1 bits. This means that all consecutive bit errors of *r* bits or fewer will be detected. Under appropriate assumptions, a burst of length greater than *r* + 1 bits is detected with probability 1 – 0.5^*r*. Also, each of the CRC standards can detect any odd number of bit errors.
 
-![Screenshot 2024-12-06 at 12.08.38 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-06_at_12.08.38_PM.png)
+![Screenshot 2024-12-06 at 12.08.38 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-06_at_12.08.38_PM.png)
 
 ### MAC protocols
 
@@ -710,7 +710,7 @@ iii. **Efficiency** of a slotted MAC is the long-run fraction of successful slot
 - Nodes need to wait a **random time** after collision because fixed time won’t help. Waiting time should be small for small number of colliding nodes and large for large. In **binary exponential backoff algorithm**, when transmitting a frame that saw n collisions, K value is chosen at random from $\{0,1,2,..2^n-1\}$. Thus larger n ⇒ chance of larger K. Set size grows exponentially with n.
 - When preparing a new node for transmission these recent collisions are not taken into account ⇒ new frame may just sneak in and successfully transmit!
 
-![Screenshot 2024-12-06 at 1.19.44 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-06_at_1.19.44_PM.png)
+![Screenshot 2024-12-06 at 1.19.44 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-06_at_1.19.44_PM.png)
 
 - CSMA/CD **Efficiency** is given by the following, where d-prop and d-trans are max. time for prop between any two adapters and the time to transmit a max sized frame respectively. d-prop is 0 and a large d-trans lead to efficiency 1 (large d-trans ⇒ productive work most of the time)
     
@@ -796,7 +796,7 @@ In this sense a switch is **smarter** than a hub.
 4. Easing network management: A switch can disconnect adapter sending too many frames due to malfunction. Cable cut disconnects only that host that was using the cut cable to connect to the switch. Switches also gather statistics on bandwidth usage, collision rates, and traffic types, and make this information available to the network manager. This information can be used to debug and correct problems, and to plan how the LAN should evolve in the future.
 - **Switches vs routers**
 
-![Screenshot 2024-12-07 at 1.07.04 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.07.04_PM.png)
+![Screenshot 2024-12-07 at 1.07.04 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.07.04_PM.png)
 
 - **Switch pros: 
 1.** Switches are plug and play. 
@@ -825,9 +825,9 @@ In this sense a switch is **smarter** than a hub.
 
 *Details of standards:*
 
-![Screenshot 2024-12-07 at 1.29.45 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.29.45_PM.png)
+![Screenshot 2024-12-07 at 1.29.45 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.29.45_PM.png)
 
-![Screenshot 2024-12-07 at 1.30.06 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.30.06_PM.png)
+![Screenshot 2024-12-07 at 1.30.06 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.30.06_PM.png)
 
 **802.11 architecture**
 
@@ -836,7 +836,7 @@ In this sense a switch is **smarter** than a hub.
 - As with Ethernet devices, each 802.11 wireless station has a 6-byte MAC address that is stored in the firmware of the station’s adapter (ie, 802.11 network interface card). Each AP also has a MAC address for **each** of its wireless interface.
 - Wireless LANs that deploy APs are often referred to as **infrastructure wireless LANs**, with the “infrastructure” being the APs along with the wired Ethernet infrastructure that interconnects the APs and a router.
 
-![Screenshot 2024-12-07 at 1.34.06 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.34.06_PM.png)
+![Screenshot 2024-12-07 at 1.34.06 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_1.34.06_PM.png)
 
 - The stations (laptops here) can also group themselves together to form an ad hoc network—a network with no central control and with no connections to the “outside world.” Here, the network is formed on the fly by mobile devices that have found themselves in proximity to each other, and want to communicate, and that find no preexisting network infrastructure (such as a centralized AP) in their location.
 
@@ -847,7 +847,7 @@ In this sense a switch is **smarter** than a hub.
 - After selecting the AP with which to associate, the wireless host sends an association request frame to the AP, and the AP responds with an association response frame. Once associated with an AP, the host will want to join the subnet (in the IP addressing sense of Section 4.4.2) to which the AP belongs. Thus, the host will typically send a DHCP discovery message into the subnet via the AP in order to obtain an IP address on the subnet.
 - The wireless station may be required to authenticate itself to the AP to form an association. This can happen through permission based on MAC address or passwords.
 
-![Screenshot 2024-12-07 at 2.32.01 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_2.32.01_PM.png)
+![Screenshot 2024-12-07 at 2.32.01 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_2.32.01_PM.png)
 
 **802.11 MAC protocol**
 
@@ -864,14 +864,14 @@ In this sense a switch is **smarter** than a hub.
 
 **Dealing with Hidden Terminals: RTS and CTS**
 
-![Screenshot 2024-12-07 at 2.50.21 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_2.50.21_PM.png)
+![Screenshot 2024-12-07 at 2.50.21 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_2.50.21_PM.png)
 
 - Due to **fading**, signals of wireless stations can be limited to a range as shown. Collisions can happen here (which are costly because frame transmissions from both stations are done *completely*).
 - IEEE 802.11 protocol allows a station to use a short **Request to Send (RTS)** control frame and a short **Clear to Send (CTS)** control frame to *reserve* access to the channel. This reservation scheme is *optional*.
 - When a sender wants to send a DATA frame, it can first send an RTS frame to the AP, indicating the total time required to transmit the DATA frame and ACK frame. When the AP receives the RTS frame, it responds by broadcasting a CTS frame serving two purposes: It gives the sender explicit permission to send and also instructs the other stations not to send for the reserved duration.
 - **Pros:**
 
-![Screenshot 2024-12-07 at 2.54.40 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_2.54.40_PM.png)
+![Screenshot 2024-12-07 at 2.54.40 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_2.54.40_PM.png)
 
 - **Pros and uses:
 1.** The hidden station problem is mitigated, since a long DATA frame is transmitted only after the channel has been reserved.
@@ -939,7 +939,7 @@ is possible to provide continuous playout even when the throughput fluctuates, a
 1. Absorbs variations in server-to-client delay
 2. If server-to-client bandwidth briefly drops below the video consumption rate, user can continue to enjoy continuous playback
 
-![Screenshot 2024-12-07 at 5.33.07 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_5.33.07_PM.png)
+![Screenshot 2024-12-07 at 5.33.07 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_5.33.07_PM.png)
 
 **UDP Streaming**
 
@@ -1006,7 +1006,7 @@ Two playback strategies: **fixed playout delay** and **adaptive playout delay.**
 - With the fixed-delay strategy, the receiver attempts to play out each chunk exactly *q* msecs after the chunk is **generated** (at sender!). So if a chunk is timestamped at the sender at time *t,* the receiver plays out the chunk at time *t* + *q,* assuming the chunk has arrived by that time. Packets that arrive after their scheduled playout times are discarded and considered lost.
 - VoIP can support delays up to about 400 msecs, although a more satisfying conversational experience is achieved with smaller values of *q*. On the other hand, if *q* is made much smaller than 400 msecs, then many packets may miss their scheduled playback times due to the network-induced packet jitter.
 
-![Screenshot 2024-12-07 at 10.51.01 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_10.51.01_PM.png)
+![Screenshot 2024-12-07 at 10.51.01 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_10.51.01_PM.png)
 
 - Roughly speaking, if large variations in end-to-end delay are typical, it is preferable to use a large *q*; on the other hand, if delay is small and variations in delay are also small, it is preferable to use a small *q,* perhaps less than 150 msecs.
 
@@ -1037,13 +1037,13 @@ First packet in a spurt can be detected by examining the signal energy in each r
 
 In order to cope with consecutive loss, we can use a simple variation. Instead of appending just the (*n* – 1)st low-bit rate chunk to the *n*th nominal chunk. Appending more such chunks makes audio quality at the receiver becomes acceptable for a wider variety of harsh best-effort environments at the cost of tr bandwidth and playout delay
 
-![Screenshot 2024-12-07 at 11.15.45 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_11.15.45_PM.png)
+![Screenshot 2024-12-07 at 11.15.45 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_11.15.45_PM.png)
 
 - **Interleaving:** Instead of redundant transmission, sender can interleave! ie., resequence units of audio data before transmission, so that originally adjacent units are separated by a certain distance in the transmitted stream. Interleaving can mitigate the effect of packet losses. Loss of a single packet from an interleaved stream results in multiple small gaps in the reconstructed stream, as opposed to the single large gap that would occur in a noninterleaved stream. 
 
 Interleaving improves audio quality, has low overhead, does not increase the bandwidth requirements of a stream but increases latency. So it is good for streaming stored audio but limited for VoIP.
 
-![Screenshot 2024-12-07 at 11.23.21 PM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_11.23.21_PM.png)
+![Screenshot 2024-12-07 at 11.23.21 PM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-07_at_11.23.21_PM.png)
 
 - **Error concealment** schemes attempt to produce a replacement for a lost packet that is similar to the original.  possible since audio signals, and in particular speech, exhibit large amounts of short-term self-similarity. When the loss length approaches the length of a phoneme (5–100 msecs) these techniques break down, since whole phonemes may be missed by the listener. **Packet repetition** and **interpolation** (more computationally intensive and better) are common techniques.
 
@@ -1068,7 +1068,7 @@ probability that two streams get assigned the same SSRC is very small. If it doe
 
 ### Network Support for Multimedia
 
-![Screenshot 2024-12-08 at 10.38.31 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-08_at_10.38.31_AM.png)
+![Screenshot 2024-12-08 at 10.38.31 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-08_at_10.38.31_AM.png)
 
 **Dimensioning best-effort networks**
 
@@ -1121,16 +1121,16 @@ Under WFQ, during any interval of time during which there are class *i* packets 
 2. *Peak rate:* limits the maximum number of packets that can be sent over a shorter period of time. ex., average rate of 6,000 packets per minute, while limiting the flow’s peak rate to 1,500 packets per second.
 3. *Burst size.* limit the maximum number of packets (the “burst” of packets) that can be sent into the network over an extremely short interval of time. Even though it is physically impossible to instantaneously send multiple packets into the network the abstraction of a maximum burst size is a useful one.
 
-![Screenshot 2024-12-09 at 6.42.22 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_6.42.22_AM.png)
+![Screenshot 2024-12-09 at 6.42.22 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_6.42.22_AM.png)
 
 - Bucket can hold up to b tokens. Tokens are generated at rate r. If bucket is full then new tokens are ignored. Incoming packet must pick  token a move forward. Thus, the maximum burst size for a leaky-bucket policed flow is *b* packets. Because the token generation rate is *r,* the maximum number of packets that can enter the network of *any* interval of time of length *t* is *rt* + *b*. So *r* serves to limit the long-term average rate at which packets can enter the network. 
 It is also possible to use leaky buckets (specifically, two leaky buckets in series) to **police a flow’s peak rate** in addition to the long term average rate.
 
 **Leaky Bucket + Weighted Fair Queuing = Provable Maximum Delay in a Queue**
 
-![Screenshot 2024-12-09 at 6.46.48 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_6.46.48_AM.png)
+![Screenshot 2024-12-09 at 6.46.48 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_6.46.48_AM.png)
 
-![Screenshot 2024-12-09 at 6.47.28 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_6.47.28_AM.png)
+![Screenshot 2024-12-09 at 6.47.28 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_6.47.28_AM.png)
 
 ### Per-Connection QoS Guarantees: Resource reservation and Call Admission
 
@@ -1141,7 +1141,7 @@ It is also possible to use leaky buckets (specifically, two leaky buckets in ser
 2. **Call admission:** In telephone, **i**f the circuits (TDMA slots) needed to complete the call are available, the circuits are allocated and the call is completed. If the circuits are not available, then the call is blocked, and we receive a busy signal. Typically, a call may reserve only a fraction of the link’s bandwidth, and so a router may allocate link bandwidth to more than one call. Sum of the allocated bandwidth to all calls should be less than the link capacity if hard quality of service guarantees are to be provided. 
 3. **Call setup signaling:** The call admission process described above requires that a call be able to reserve sufficient resources at each and every network router on its source-to-destination path to ensure that its end-to-end QoS requirement is met. Each router must determine the local resources required by the session, consider the amounts of its resources that are already committed to other ongoing sessions, and determine whether it has sufficient resources to satisfy the per-hop QoS requirement of the session at this router without violating local QoS guarantees made to an already-admitted session. A signaling protocol is needed to coordinate these various activities—the per-hop allocation of local resources, as well as the overall end-to-end decision of whether or not the call has been able to reserve sufficient resources at each and every router on the end-to-end path. This is the job of the **call setup protocol**, as shown in Figure 7.28. The **RSVP protocol** was proposed for this purpose within an Internet architecture for providing quality-of-service guarantees.
 
-![Screenshot 2024-12-09 at 7.00.05 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_7.00.05_AM.png)
+![Screenshot 2024-12-09 at 7.00.05 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-12-09_at_7.00.05_AM.png)
 
 Despite a tremendous amount of research and development, and even products that provide for per-connection quality of service guarantees, there has been almost no extended deployment of such services. This may be because 
 1. That the simple application-level mechanisms, combined with proper network dimensioning provide “good enough” best-effort network
@@ -1165,16 +1165,16 @@ service for multimedia applications.
 Six bits (4,8,12,16,20,24) take on the alternating pattern 001011.. The receiver keeps checking for this pattern to make sure that it has not lost synchronization. Six more bits are used to send an error check code to help the receiver confirm that it is synchronized. If it does get out of sync, the receiver can scan for the pattern and validate the error check code to get resynchronized. The remaining 12 bits are used for control information for operating and maintaining the network, such as performance reporting from the remote end.
 - Time division multiplexing allows multiple T1 carriers to be multiplexed into higher-order carriers.
     
-    ![Screenshot 2024-11-03 at 1.24.36 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.24.36_AM.png)
+    ![Screenshot 2024-11-03 at 1.24.36 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.24.36_AM.png)
     
-- 
+- In addition:
     
-    ![Screenshot 2024-11-03 at 1.25.21 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.25.21_AM.png)
+    ![Screenshot 2024-11-03 at 1.25.21 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.25.21_AM.png)
     
-    ![Screenshot 2024-11-03 at 1.25.48 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.25.48_AM.png)
+    ![Screenshot 2024-11-03 at 1.25.48 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.25.48_AM.png)
     
 - For home users, ISPs usually charge a flat monthly rate because it is less work for them and their customers can understand this model, but backbone carriers charge regional networks based on the volume of their traffic.
     
-    ![Screenshot 2024-11-03 at 1.22.18 AM.png](../public/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.22.18_AM.png)
+    ![Screenshot 2024-11-03 at 1.22.18 AM.png](/static/images/computer_networks_notes_pics/Screenshot_2024-11-03_at_1.22.18_AM.png)
     
 -

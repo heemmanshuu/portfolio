@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: 'G Heemmanshuu Dasari',
     description: 'Obsessed with developer experience',
-    url: 'https://zenorocha.com',
+    url: 'https://ghdasari.vercel.app',
     images: ['/static/images/home-bw.jpg']
   }
 };

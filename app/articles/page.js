@@ -10,7 +10,7 @@ export const metadata = {
     'Here you can find all the articles I wrote. You can read about web development, software engineering, and tech career in both English and Portuguese.',
   openGraph: {
     title: 'Articles // G Heemmanshuu Dasari',
-    url: 'https://zenorocha.com/articles',
+    url: 'https://ghdasari.vercel.app/articles',
     images: ['/static/images/articles-bw.jpg']
   }
 };
@@ -28,8 +28,8 @@ export default async function Articles() {
   ];
 
   const featuredPosts = [
-    getPostBySlug('the-two-types-of-quality', featuredParams),
-    getPostBySlug('how-is-life-post-yc', featuredParams)
+    getPostBySlug('computer-networks-notes', featuredParams),
+    //getPostBySlug('how-is-life-post-yc', featuredParams)
   ];
 
   const description = `Here you can find all the <strong>${allPosts.length} articles</strong> I wrote. You can read about web development, software engineering, and tech career in both English and Portuguese.`;

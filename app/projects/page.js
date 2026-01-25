@@ -8,7 +8,7 @@ export const metadata = {
     "I'm obsessed with side projects and building in public. Here you can explore the things I've built over the years.",
   openGraph: {
     title: 'Projects // G Heemmanshuu Dasari',
-    url: 'https://zenorocha.com/projects'
+    url: 'https://ghdasari.vercel.app/projects'
   }
 };
 

@@ -55,12 +55,12 @@ const firaCode = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://zenorocha.com'),
+  metadataBase: new URL('https://ghdasari.vercel.app'),
   title: {
     default: 'G Heemmanshuu Dasari',
     template: '%s // G Heemmanshuu Dasari'
   },
-  description: 'Obsessed with developer experience',
+  description: 'Building scalable, reliable systems.',
   authors: [{ name: 'G Heemmanshuu Dasari' }],
   openGraph: {
     type: 'website',

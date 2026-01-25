@@ -31,10 +31,10 @@ export async function generateMetadata({ params }) {
 
     const title = `${post.title} // Heemmanshuu Dasari`;
     const description = post.description || '';
-    const url = `https://zenorocha.com/${slug}`;
+    const url = `https://ghdasari.vercel.app/${slug}`;
     const image = post.image
-      ? `https://zenorocha.com${post.image}`
-      : 'https://zenorocha.com/static/images/home-opt.jpg';
+      ? `https://ghdasari.vercel.app${post.image}`
+      : 'https://ghdasari.vercel.app/static/images/home-opt.jpg';
 
     return {
       title: post.title,
@@ -89,11 +89,11 @@ export default async function Post({ params }) {
   }
 
   const title = `${post.title} // Heemmanshuu Dasari`;
-  const url = `https://zenorocha.com/${post.slug}`;
+  const url = `https://ghdasari.vercel.app/${post.slug}`;
   const date = new Date(post.date).toISOString();
   const image = post.image
-    ? `https://zenorocha.com${post.image}`
-    : 'https://zenorocha.com/static/images/home-opt.jpg';
+    ? `https://ghdasari.vercel.app${post.image}`
+    : 'https://ghdasari.vercel.app/static/images/home-opt.jpg';
 
   return (
     <>

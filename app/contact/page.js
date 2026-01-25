@@ -16,7 +16,7 @@ export default function Contact() {
 
     try {
       const isProd = process.env.NODE_ENV === 'production';
-      const base = isProd ? 'https://zenorocha.com' : 'http://localhost:3000';
+      const base = isProd ? 'https://ghdasari.vercel.app' : 'http://localhost:3000';
 
       await fetch(`${base}/api/email`, {
         method: 'POST',
