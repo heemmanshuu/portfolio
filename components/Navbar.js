@@ -17,7 +17,7 @@ export default function Navbar() {
     // 'Podcasts',
     // 'Investing',
     // 'Uses',
-    'Reminder'
+    // 'Reminder'
   ];
   const { toggle } = useCommandBar();
 
@@ -25,9 +25,9 @@ export default function Navbar() {
     <header className="text-primary absolute top-0 z-3 mt-3.25 flex min-h-14.75 w-full flex-wrap items-center text-xs lg:mt-0">
       <Link
         href="/"
-        className="hover:bg-hover font-display text-primary ml-3 flex h-8.5 cursor-pointer appearance-none items-center rounded-lg border-none bg-transparent px-2.5 text-[2rem] leading-none font-bold no-underline transition-all duration-300 ease-in-out"
+        className="hover:bg-hover font-display text-primary ml-3 flex h-8.5 cursor-pointer appearance-none items-center rounded-lg border-none bg-transparent px-2.5 text-[1.5rem] leading-none font-bold no-underline transition-all duration-300 ease-in-out"
       >
-        <span className="translate-y-0.25">z</span>
+        <span className="translate-y-0.25">H</span>
       </Link>
       <nav className="flex-basis-full lg:flex-basis-initial order-2 flex-1 text-center max-lg:overflow-x-scroll max-lg:overflow-y-hidden lg:order-0">
         <ul className="relative top-0 m-0 inline-flex list-none p-0 lg:top-1.25 lg:justify-around">
@@ -52,6 +52,22 @@ export default function Navbar() {
               </li>
             );
           })}
+          <li className="relative">
+            <HoverAnimation
+              id="Resume"
+              layoutId="nav"
+              backgroundClassName="top-1/2 right-0 left-0 -translate-y-1/2 p-5"
+            >
+              <a
+                href="/static/pdfs/G_Heemmanshuu_Dasari_resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="after:bg-primary hover:text-primary relative inline-block cursor-pointer border-0 px-5 py-3 text-xs font-medium tracking-[.075rem] uppercase transition-all duration-300 ease-in-out after:absolute after:bottom-[.375rem] after:left-1/2 after:block after:h-px after:w-5 after:-translate-x-1/2 after:transition-all after:duration-300 after:ease-in-out after:opacity-0 after:content-[''] hover:opacity-100 focus:opacity-100 text-secondary"
+              >
+                Resume
+              </a>
+            </HoverAnimation>
+          </li>
         </ul>
       </nav>
       <div className="mr-3 ml-auto flex items-center">

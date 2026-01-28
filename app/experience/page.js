@@ -26,6 +26,16 @@ export default function Experience() {
         Think of it as LinkedIn — but calmer, opinionated, and mine.
       </p>
 
+      <p className="text-sm opacity-80">
+        Prefer a concise summary?{' '}
+        <a
+          href="/static/pdfs/G_Heemmanshuu_Dasari_resume.pdf"
+          target="_blank"
+        >
+          View my résumé.
+        </a>
+      </p>
+
       {/* ================= INDUSTRY ================= */}
       <h2>Industry</h2>
 

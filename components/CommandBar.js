@@ -49,16 +49,16 @@ export default function CommandBar(props) {
   const shortcutCombos = {
     copy: ['l'],
     email: ['e'],
-    source: ['s'],
+    // source: ['s'],
     home: ['g', 'h'],
     about: ['g', 'a'],
     articles: ['g', 'b'],
     projects: ['g', 'p'],
-    talks: ['g', 't'],
-    podcasts: ['g', 'c'],
-    investing: ['g', 'i'],
-    uses: ['g', 'u'],
-    reminder: ['g', 'r']
+    resume: ['g', 't'],     // was talks
+    // podcasts: ['g', 'c'],
+    // investing: ['g', 'i'],
+    experience: ['g', 'u'], // was 'uses'
+    // reminder: ['g', 'r']
   };
 
   const actionsBySection = {
@@ -90,19 +90,19 @@ export default function CommandBar(props) {
         },
         iconId: 'email'
       },
-      {
-        id: 'source',
-        name: 'View Source',
-        shortcut: shortcutCombos.source,
-        keywords: 'view-source',
-        section: 'General',
-        iconData: sourceIcon,
-        perform: () => {
-          window.open('https://github.com/zenorocha/zenorocha.com', '_blank');
-          setOpen(false);
-        },
-        iconId: 'source'
-      }
+      // {
+      //   id: 'source',
+      //   name: 'View Source',
+      //   shortcut: shortcutCombos.source,
+      //   keywords: 'view-source',
+      //   section: 'General',
+      //   iconData: sourceIcon,
+      //   perform: () => {
+      //     window.open('https://github.com/zenorocha/zenorocha.com', '_blank');
+      //     setOpen(false);
+      //   },
+      //   iconId: 'source'
+      // }
     ],
     'Go To': [
       {
@@ -132,17 +132,17 @@ export default function CommandBar(props) {
         iconId: 'about'
       },
       {
-        id: 'articles',
-        name: 'Articles',
-        shortcut: shortcutCombos.articles,
-        keywords: 'go-articles',
+        id: 'experience',
+        name: 'Experience',
+        shortcut: shortcutCombos.experience,
+        keywords: 'go-experience',
         section: 'Go To',
-        iconData: articlesIcon,
+        iconData: usesIcon,
         perform: () => {
-          router.push('/articles');
+          router.push('/experience');
           setOpen(false);
         },
-        iconId: 'articles'
+        iconId: 'experience'
       },
       {
         id: 'projects',
@@ -158,70 +158,70 @@ export default function CommandBar(props) {
         iconId: 'projects'
       },
       {
-        id: 'talks',
-        name: 'Talks',
-        shortcut: shortcutCombos.talks,
-        keywords: 'go-talks',
+        id: 'articles',
+        name: 'Articles',
+        shortcut: shortcutCombos.articles,
+        keywords: 'go-articles',
+        section: 'Go To',
+        iconData: articlesIcon,
+        perform: () => {
+          router.push('/articles');
+          setOpen(false);
+        },
+        iconId: 'articles'
+      },
+      {
+        id: 'resume',
+        name: 'Resume',
+        shortcut: shortcutCombos.resume,
+        keywords: 'go-resume',
         section: 'Go To',
         iconData: talksIcon,
         perform: () => {
-          router.push('/talks');
+          router.push('/static/pdfs/G_Heemmanshuu_Dasari_resume.pdf');
           setOpen(false);
         },
-        iconId: 'talks'
+        iconId: 'resume'
       },
-      {
-        id: 'podcasts',
-        name: 'Podcasts',
-        shortcut: shortcutCombos.podcasts,
-        keywords: 'go-podcasts',
-        section: 'Go To',
-        iconData: podcastsIcon,
-        perform: () => {
-          router.push('/podcasts');
-          setOpen(false);
-        },
-        iconId: 'podcasts'
-      },
-      {
-        id: 'investing',
-        name: 'Investing',
-        shortcut: shortcutCombos.investing,
-        keywords: 'go-investing',
-        section: 'Go To',
-        iconData: investingIcon,
-        perform: () => {
-          router.push('/investing');
-          setOpen(false);
-        },
-        iconId: 'investing'
-      },
-      {
-        id: 'uses',
-        name: 'Uses',
-        shortcut: shortcutCombos.uses,
-        keywords: 'go-uses',
-        section: 'Go To',
-        iconData: usesIcon,
-        perform: () => {
-          router.push('/uses');
-          setOpen(false);
-        },
-        iconId: 'uses'
-      },
-      {
-        id: 'reminder',
-        name: 'Reminder',
-        shortcut: shortcutCombos.reminder,
-        keywords: 'go-reminder',
-        section: 'Go To',
-        iconData: reminderIcon,
-        perform: () => {
-          router.push('/reminder');
-          setOpen(false);
-        },
-        iconId: 'reminder'
-      }
+      // {
+      //   id: 'podcasts',
+      //   name: 'Podcasts',
+      //   shortcut: shortcutCombos.podcasts,
+      //   keywords: 'go-podcasts',
+      //   section: 'Go To',
+      //   iconData: podcastsIcon,
+      //   perform: () => {
+      //     router.push('/podcasts');
+      //     setOpen(false);
+      //   },
+      //   iconId: 'podcasts'
+      // },
+      // {
+      //   id: 'investing',
+      //   name: 'Investing',
+      //   shortcut: shortcutCombos.investing,
+      //   keywords: 'go-investing',
+      //   section: 'Go To',
+      //   iconData: investingIcon,
+      //   perform: () => {
+      //     router.push('/investing');
+      //     setOpen(false);
+      //   },
+      //   iconId: 'investing'
+      // },
+      // {
+      //   id: 'reminder',
+      //   name: 'Reminder',
+      //   shortcut: shortcutCombos.reminder,
+      //   keywords: 'go-reminder',
+      //   section: 'Go To',
+      //   iconData: reminderIcon,
+      //   perform: () => {
+      //     router.push('/reminder');
+      //     setOpen(false);
+      //   },
+      //   iconId: 'reminder'
+      // }
     ]
   };
 
@@ -241,9 +241,9 @@ export default function CommandBar(props) {
 
   useHotkeys(shortcutCombos.copy.join('>'), () => actionsById.copy.perform());
   useHotkeys(shortcutCombos.email.join('>'), () => actionsById.email.perform());
-  useHotkeys(shortcutCombos.source.join('>'), () =>
-    actionsById.source.perform()
-  );
+  // useHotkeys(shortcutCombos.source.join('>'), () =>
+  //   actionsById.source.perform()
+  // );
   useHotkeys(shortcutCombos.home.join('>'), () => actionsById.home.perform());
   useHotkeys(shortcutCombos.about.join('>'), () => actionsById.about.perform());
   useHotkeys(shortcutCombos.articles.join('>'), () =>
@@ -252,17 +252,17 @@ export default function CommandBar(props) {
   useHotkeys(shortcutCombos.projects.join('>'), () =>
     actionsById.projects.perform()
   );
-  useHotkeys(shortcutCombos.talks.join('>'), () => actionsById.talks.perform());
-  useHotkeys(shortcutCombos.podcasts.join('>'), () =>
-    actionsById.podcasts.perform()
-  );
-  useHotkeys(shortcutCombos.investing.join('>'), () =>
-    actionsById.investing.perform()
-  );
-  useHotkeys(shortcutCombos.uses.join('>'), () => actionsById.uses.perform());
-  useHotkeys(shortcutCombos.reminder.join('>'), () =>
-    actionsById.reminder.perform()
-  );
+  useHotkeys(shortcutCombos.resume.join('>'), () => actionsById.resume.perform());
+  // useHotkeys(shortcutCombos.podcasts.join('>'), () =>
+  //   actionsById.podcasts.perform()
+  // );
+  // useHotkeys(shortcutCombos.investing.join('>'), () =>
+  //   actionsById.investing.perform()
+  // );
+  useHotkeys(shortcutCombos.experience.join('>'), () => actionsById.experience.perform());
+  // useHotkeys(shortcutCombos.reminder.join('>'), () =>
+  //   actionsById.reminder.perform()
+  // );
 
   return (
     <CommandBarContext.Provider

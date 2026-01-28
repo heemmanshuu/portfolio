@@ -7,7 +7,7 @@ import { getAllPosts, getPostBySlug } from '../../lib/blog';
 export const metadata = {
   title: 'Articles',
   description:
-    'Here you can find all the articles I wrote. You can read about web development, software engineering, and tech career in both English and Portuguese.',
+    'Notes, summaries, and resources I wrote during coursework and self-study.',
   openGraph: {
     title: 'Articles // G Heemmanshuu Dasari',
     url: 'https://ghdasari.vercel.app/articles',
@@ -15,47 +15,75 @@ export const metadata = {
   }
 };
 
-export default async function Articles() {
-  const allPosts = getAllPosts(['date', 'skip', 'slug', 'title']);
-
-  const featuredParams = [
-    'date',
-    'slug',
-    'title',
-    'image',
-    'content',
-    'description'
-  ];
+export default function Articles() {
+  const allPosts = getAllPosts(['date', 'skip', 'slug', 'title', 'category']);
 
   const featuredPosts = [
-    getPostBySlug('computer-networks-notes', featuredParams),
-    //getPostBySlug('how-is-life-post-yc', featuredParams)
+    getPostBySlug('computer-networks-notes', [
+      'date',
+      'slug',
+      'title',
+      'image',
+      'content',
+      'description'
+    ])
   ];
 
-  const description = `Here you can find all the <strong>${allPosts.length} articles</strong> I wrote. You can read about web development, software engineering, and tech career in both English and Portuguese.`;
+  /** ---------- External PDF articles ---------- */
+  const pdfArticles = [
+    {
+      title: "Myerson's Lemma — Class Notes",
+      date: '2024-11-01',
+      href: '/static/pdfs/myerson-lemma.pdf'
+    }
+  ];
 
-  const renderFeatured = () => {
-    return featuredPosts.map((post, index) => {
-      return (
-        <FeaturedArticle
-          key={post.slug}
-          index={index}
-          href={`/${post.slug}/`}
-          title={post.title}
-          description={post.description}
-          image={post.image}
-          stats={post.stats}
-          content={post.content}
-        />
-      );
-    });
-  };
+  /** ---------- Paper summaries (Markdown) ---------- */
+  const paperSummaries = allPosts.filter(
+    (post) => post.category === 'paper-summary' && !post.skip
+  );
 
-  const renderAll = () => {
-    return allPosts
-      .filter((post) => !post.skip)
-      .map((post, index) => {
-        return (
+  /** ---------- Everything else ---------- */
+  const mainArticles = allPosts.filter(
+    (post) => post.category !== 'paper-summary' && !post.skip
+  );
+
+  const description = `Here you can find <strong>${
+    allPosts.length + pdfArticles.length
+  } articles</strong> including class notes, toolkits, and paper summaries.`;
+
+  const renderFeatured = () =>
+    featuredPosts.map((post, index) => (
+      <FeaturedArticle
+        key={post.slug}
+        index={index}
+        href={`/${post.slug}/`}
+        title={post.title}
+        description={post.description}
+        image={post.image}
+        content={post.content}
+      />
+    ));
+
+  return (
+    <Base
+      title="Articles // G Heemmanshuu Dasari"
+      tagline="Notes. Proofs. Systems."
+      primaryColor="yellow"
+      secondaryColor="pink"
+    >
+      <p dangerouslySetInnerHTML={{ __html: description }} />
+
+      {/* ---------- Featured ---------- */}
+      <h2>Featured</h2>
+      <div className="my-2.5 -ml-5 md:flex md:w-[calc(100%+3.375rem)] md:justify-between">
+        {renderFeatured()}
+      </div>
+
+      {/* ---------- Main articles ---------- */}
+      <h2>Notes & Toolkits</h2>
+      <ListGroup>
+        {mainArticles.map((post, index) => (
           <ListItem
             key={post.slug}
             index={index}
@@ -63,24 +91,36 @@ export default async function Articles() {
             title={post.title}
             date={post.date}
           />
-        );
-      });
-  };
+        ))}
+      </ListGroup>
 
-  return (
-    <Base
-      title="Articles // G Heemmanshuu Dasari"
-      tagline="Stories. Updates. Guides."
-      primaryColor="yellow"
-      secondaryColor="pink"
-    >
-      <p dangerouslySetInnerHTML={{ __html: description }} />
-      <h2>Featured Articles</h2>
-      <div className="my-2.5 mt-2.5 -ml-5 md:flex md:w-[calc(100%+3.375rem)] md:justify-between">
-        {renderFeatured()}
-      </div>
-      <h2>All Articles</h2>
-      <ListGroup>{renderAll()}</ListGroup>
+      {/* ---------- Paper summaries ---------- */}
+      <h2>Paper Summaries</h2>
+      <ListGroup>
+        {paperSummaries.map((post, index) => (
+          <ListItem
+            key={post.slug}
+            index={index}
+            href={`/${post.slug}/`}
+            title={post.title}
+            date={post.date}
+          />
+        ))}
+      </ListGroup>
+
+      {/* ---------- PDF notes ---------- */}
+      <h2>PDF Notes</h2>
+      <ListGroup>
+        {pdfArticles.map((post, index) => (
+          <ListItem
+            key={post.href}
+            index={index}
+            href={post.href}
+            title={post.title}
+            date={post.date}
+          />
+        ))}
+      </ListGroup>
     </Base>
   );
 }
