@@ -1,12 +1,12 @@
 ---
-title: Cassandra
+title: Cassandra - a decentralized structured storage system
 description: 'A summary of the Cassandra paper'
 slug: cassandra-paper-summary
 category: 'paper-summary'
-date: '2025-12-10'
+date: '2025-06-13'
 ---
 
-# Paper Summary: Lakshman, Avinash, and Prashant Malik. [“Cassandra: a decentralized structured storage system.”](https://dl.acm.org/doi/pdf/10.1145/1773912.1773922), ACM SIGOPS Operating Systems Review 44.2 (2010): 35-40.
+Paper Summary: Lakshman, Avinash, and Prashant Malik. [“Cassandra: a decentralized structured storage system.”](https://dl.acm.org/doi/pdf/10.1145/1773912.1773922), ACM SIGOPS Operating Systems Review 44.2 (2010): 35-40.
 
 The authors present Cassandra, a scalable, fault-tolerant, and decentralized storage system designed to handle large volumes of structured data across distributed infrastructure. Originally developed at Facebook to support the Inbox Search feature for hundreds of millions of users, Cassandra addresses the shortcomings of applying Dynamo or BigTable to this system. It is highly available like Dynamo and has the data model of BigTable. Cassandra is capable of handling massive volumes of writes and supporting geographically distributed deployments. Cassandra is optimized for write-heavy workloads where high throughput and fault tolerance are critical. Unlike traditional relational databases that rely on strict consistency and centralized coordination, Cassandra relies on eventual consistency, enabling high availability and partition tolerance.
 

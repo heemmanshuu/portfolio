@@ -7,7 +7,7 @@ image: /static/img/posts/marathons-and-startups.jpg
 date: '2024-12-10'
 ---
 
-# Kurose Ross Notes
+### Kurose Ross Notes
 
 **Checklist** 
 

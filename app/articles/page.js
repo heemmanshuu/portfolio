@@ -32,10 +32,15 @@ export default function Articles() {
   /** ---------- External PDF articles ---------- */
   const pdfArticles = [
     {
-      title: "Myerson's Lemma — Class Notes",
-      date: '2024-11-01',
-      href: '/static/pdfs/myerson-lemma.pdf'
-    }
+      title: "Notes on Competitive Auctions",
+      date: '2024-12-03',
+      href: '/static/pdfs/competitive_auctions_report.pdf'
+    },
+    {
+      title: "Notes on Myerson's Lemma",
+      date: '2024-11-17',
+      href: '/static/pdfs/myersons_lemma_report.pdf'
+    },
   ];
 
   /** ---------- Paper summaries (Markdown) ---------- */
