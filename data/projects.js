@@ -1,23 +1,75 @@
 const items = [
   {
-    year: '2024',
+    year: '2025',
     projects: [
       {
-        title: 'THAMM',
-        description: 'A pluggable, real-time matchmaking middleware using Kafka and Flink.',
-        github: 'https://github.com/yourname/thamm',
-        report: 'https://drive.google.com/your-report-link',
+        title: 'Adaptive LoRA caching for LLM serving',
+        description: 'Adding a GPU side cache to maximise efficiency is multi-tenant LLM serving scenarios.',
+        github: '',
+        report: '/static/pdfs/lora_caching_report.pdf',
+        tags: ['PEFT', 'LoRA', 'S-LoRA', 'Chameleon', 'LLM inference', 'Caching'],
+        image: null // future-proof
+      },
+      {
+        title: 'MatchOpt',
+        description: 'The first open-source real-time matchmaking middleware EOMM.',
+        github: 'https://github.com/heemmanshuu/thamm',
+        report: '/static/pdfs/matchopt_eomm_report.pdf',
         tags: ['Kafka', 'Flink', 'Distributed Systems', 'Java'],
         image: null // future-proof
       },
       {
         title: 'LLMSecConfig Audit',
         description: 'Security audit of LLM-based Kubernetes misconfiguration remediation.',
-        github: 'https://github.com/yourname/llmsecconfig',
-        report: '/reports/llmsecconfig.pdf', // hosting PDF locally is 💯 better long-term
+        github: 'https://github.com/heemmanshuu/Audit_LLM_SecConFig',
+        report: '/static/pdfs/llmsecconfig_report.pdf', // hosting PDF locally is 💯 better long-term
         tags: ['LLMs', 'Security', 'Kubernetes'],
         image: null
-      }
+      },
+      {
+        title: 'DiTTo',
+        description: 'Improving latency of HuggingFace Search-and-Learn framework for test time compute scaling.',
+        github: 'https://github.com/rajlm10/dist_test_time_compute_scaling',
+        report: '/static/pdfs/ditto_report.pdf',
+        tags: ['PyTorch', 'Fault-tolerance', 'LLM inference'],
+        image: null // future-proof
+      },
+      {
+        title: 'Reimplenting VAEs from scratch',
+        description: 'Analysis of the original VAE paper by Kingma and Welling with latent space representation and analysis.',
+        report: '/static/pdfs/vae_report.pdf',
+        tags: [],
+        image: null // future-proof
+      },
+    ]
+  },
+  {
+    year: 'Previous (non-exhaustive)',
+    projects: [
+      {
+        title: 'Image Splicing Detection',
+        description: 'Exposing image slicing by detecting inconsistencies in local noise variances.',
+        github: 'https://github.com/heemmanshuu/Image-Splicing-Detector',
+        report: '/static/pdfs/image_splicing_report.pdf',
+        tags: ['Image Processing'],
+        image: null // future-proof
+      },
+      {
+        title: 'RedPlag',
+        description: 'A web based plagiarism checker with user authentication.',
+        github: 'https://github.com/heemmanshuu/RedPlag',
+        tags: ['Bag of words', 'TF-IDF', 'Django', 'Latent Semantic Analysis'],
+        image: null // future-proof
+      },
+      // {
+      //   title: '',
+      //   description: '',
+      //   github: '',
+      //   report: '/static/pdfs/',
+      //   tags: [],
+      //   image: null // future-proof
+      // },
+      
     ]
   }
 ];
